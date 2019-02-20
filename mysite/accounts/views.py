@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.views import LoginView as AuthLoginView
 from django.urls import reverse
 from django.views import View
 
 from .forms import LoginForm
 
 # Create your views here.
-class LoginView(View):
+class LoginView(AuthLoginView):
+    template_name = "accounts/login.html"
+
     def get(self, request, *args, **kwargs):
         """GETリクエスト"""
         context = {
