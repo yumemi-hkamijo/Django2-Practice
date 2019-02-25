@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView as AuthLoginView
+from django.contrib import messages
 from django.urls import reverse
 from django.views import View
 
 from .forms import LoginForm
 
 # Create your views here.
-class LoginView(AuthLoginView):
+class LoginView(View):
     template_name = "accounts/login.html"
 
     def get(self, request, *args, **kwargs):
@@ -28,6 +29,8 @@ class LoginView(AuthLoginView):
         user = form.get_user()
 
         auth_login(request, user)
+
+        messages.info(request, "ログインしました。")
 
         return redirect(reverse('shop:index'))
 
